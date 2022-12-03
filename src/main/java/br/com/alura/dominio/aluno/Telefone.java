@@ -1,5 +1,8 @@
-package br.com.alura;
+package br.com.alura.dominio.aluno;
 
+import lombok.Getter;
+
+@Getter
 public class Telefone {
     private String ddd;
     private String numero;

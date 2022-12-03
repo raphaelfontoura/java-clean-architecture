@@ -1,5 +1,6 @@
-package br.com.alura;
+package br.com.alura.dominio.aluno;
 
+import br.com.alura.dominio.aluno.CPF;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

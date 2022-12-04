@@ -2,57 +2,74 @@ package br.com.alura.infra.indicacao;
 
 import br.com.alura.aplicacao.indicacao.EnviarEmailIndicacao;
 import br.com.alura.dominio.aluno.Aluno;
+import br.com.alura.dominio.aluno.FabricaDeAluno;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.PasswordAuthentication;
 import java.util.Properties;
+
 
 public class EnviarEmailIndicacaoComJavaMail implements EnviarEmailIndicacao {
 
-    static final String FROM = "noreply@aluraescola.com.br";
-    static final String SMTP_USERNAME = "escola@aluraescola.com.br";
-    static final String SMTP_PASSWORD = "escola123";
-    static final String HOST = "smtp.gmail.com";
-    static final int PORT = 465;
+    final String username = "seuemail@gmail.com";
+    final String password = "aaaabbbbccccdddd"; //seu password gerado para api no google
 
     @Override
     public void enviarPara(Aluno aluno) {
-        Properties props = new Properties();
-        /** Parâmetros de conexão com servidor Gmail */
-        props.put("mail.smtp.host", HOST);
-        props.put("mail.smtp.socketFactory.port", PORT);
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", PORT);
+        Properties prop = new Properties();
+        /**
+         Outgoing Mail (SMTP) Server
+         requires TLS or SSL: smtp.gmail.com (use authentication)
+         Use Authentication: Yes
+         Port for SSL: 465
+         */
+        prop.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+        prop.put("mail.smtp.socketFactory.port", "465"); //SSL Port
+        prop.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory"); //SSL Factory Class
+        prop.put("mail.smtp.auth", "true"); //Enabling SMTP Authentication
+        prop.put("mail.smtp.port", "465"); //SMTP Port
 
-        Session session = Session.getDefaultInstance(props,
-                new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(SMTP_USERNAME,SMTP_PASSWORD);
-                    }
-                });
 
-        /** Ativa Debug para sessão */
-        //session.setDebug(true);
+        /**
+         Outgoing Mail (SMTP) Server
+         requires TLS or SSL: smtp.gmail.com (use authentication)
+         Use Authentication: Yes
+         Port for TLS/STARTTLS: 587
+         */
+//        prop.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+//        prop.put("mail.smtp.port", "587"); //TLS Port
+//        prop.put("mail.smtp.auth", "true"); //enable authentication
+//        prop.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        };
+
+        Session session = Session.getDefaultInstance(prop, auth);
+
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(FROM));
-            //Remetente
+            message.setFrom(new InternetAddress("raphael.fontoura@gmail.com"));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(aluno.getEmail())
+            );
+            message.setSubject("Testing Gmail Javax");
+            message.setText("Dear Mail Crawler,"
+                    + "\n\n Please do not spam my email!");
 
-            Address[] toUser = InternetAddress //Destinatário(s)
-                    .parse(aluno.getEmail());
-
-            message.setRecipients(Message.RecipientType.TO, toUser);
-            message.setSubject("Enviando email com JavaMail");//Assunto
-            message.setText("Enviando um email para o aluno cadastrado.");
-            /**Método para enviar a mensagem criada*/
             Transport.send(message);
 
+            System.out.println("Done");
+
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

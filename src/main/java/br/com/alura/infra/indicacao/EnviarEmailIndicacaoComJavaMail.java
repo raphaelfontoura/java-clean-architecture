@@ -2,7 +2,6 @@ package br.com.alura.infra.indicacao;
 
 import br.com.alura.aplicacao.indicacao.EnviarEmailIndicacao;
 import br.com.alura.dominio.aluno.Aluno;
-import br.com.alura.dominio.aluno.FabricaDeAluno;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

@@ -61,8 +61,8 @@ public class EnviarEmailIndicacaoComJavaMail implements EnviarEmailIndicacao {
                     InternetAddress.parse(aluno.getEmail())
             );
             message.setSubject("Testing Gmail Javax");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n Please do not spam my email!");
+            message.setText("Aluno, " + aluno.getNome()
+                    + "\n\n Sua indicação ocorreu com sucesso.");
 
             Transport.send(message);
 

@@ -1,5 +1,6 @@
 package br.com.alura.aplicacao.aluno.matricular;
 
+import br.com.alura.dominio.PublicadorDeEventos;
 import br.com.alura.dominio.aluno.Aluno;
 import br.com.alura.dominio.aluno.CPF;
 import br.com.alura.infra.aluno.RepositorioDeAlunosEmMemoria;
@@ -15,7 +16,7 @@ class MatricularAlunoTest {
         RepositorioDeAlunosEmMemoria repositorio = new RepositorioDeAlunosEmMemoria();
         MatricularAlunoDto dados = new MatricularAlunoDto("Fulano", "111.222.333-44", "fulano@email.com");
 
-        MatricularAluno useCase = new MatricularAluno(repositorio);
+        MatricularAluno useCase = new MatricularAluno(repositorio, new PublicadorDeEventos());
 
         useCase.executa(dados);
 

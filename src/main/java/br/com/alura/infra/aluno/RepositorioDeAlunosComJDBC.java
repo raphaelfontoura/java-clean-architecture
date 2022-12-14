@@ -23,7 +23,7 @@ public class RepositorioDeAlunosComJDBC implements RepositorioDeAluno {
         try {
             String sql = "INSERT INTO Aluno VALUES (?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, aluno.getCpf());
+            ps.setString(1, aluno.getCpf().getCpf());
             ps.setString(2, aluno.getNome());
             ps.setString(3, aluno.getEmail());
             ps.execute();

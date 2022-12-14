@@ -25,7 +25,10 @@ public class Aluno {
         this.email = email;
     }
 
-    public void adicionarTelefone(String ddd, String numero) {
+    public void adicionarTelefone(String ddd, String numero) { // Invariante
+        if (telefones.size() == 2) {
+            throw new IllegalArgumentException("Permitido apenas 2 números de telefone por aluno.");
+        }
         this.telefones.add(new Telefone(ddd, numero));
     }
 

@@ -1,5 +1,6 @@
 package br.com.alura.escola.academico.dominio.aluno;
 
+import br.com.alura.escola.shared.dominio.CPF;
 import lombok.Getter;
 import lombok.Setter;
 

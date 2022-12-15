@@ -2,6 +2,7 @@ package br.com.alura.escola.academico.infra.aluno;
 
 import br.com.alura.escola.academico.dominio.aluno.*;
 import br.com.alura.escola.academico.dominio.aluno.exceptions.AlunoNaoEncontrado;
+import br.com.alura.escola.shared.dominio.CPF;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
